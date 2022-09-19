@@ -1,13 +1,13 @@
 // Check Prime or Not ?
-let num=23;
-let factor=1;
-for(let i=0; i<num; i--){
+let num=20;
+let factor=0;
+for(let i=1; i<=num; i++){
   if(num%i==0){
     factor++;
   }
-  if(factor==5){
-    console.log(Prime);
-  }else{
-    console.log(not a prime);
-  }
 }
+  if(factor==2){
+    console.log("Prime");
+  }else{
+    console.log("not prime");
+  }
