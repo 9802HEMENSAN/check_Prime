@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #all_countries {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: 300px;
+            gap: 50px;
+            margin: auto;
+            margin-top: 100px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        #all_countries>div {
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+            align-self: center;
+            padding: 30px;
+        }
+
+        #all_countries>div>img {
+            width: 100%;
+            height: 60%;
+        }
+   
+        @media  all and (max-width: 768px)  {
+            #all_countries{
+                display: grid;
+                grid-template-columns: repeat(2 , 1fr);
+            }
+        }
+        @media  all and (max-width: 400px)  {
+            #all_countries{
+                display: grid;
+                grid-template-columns: repeat(1 , 1fr);
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+    <select id="sort_population" onChange=sorting()>
+        <option value="all">Sort By Population</option>
+        <option value="asc">ASC</option>
+        <option value="desc">DESC</option>
+    </select>
+    <select id="filter_region" onChange=filtering()>
+        <option value="all">Filter By Region</option>
+        <option value="Africa">Africa</option>
+        <option value="Americas">Americas</option>
+        <option value="Asia">Asia</option>
+        <option value="Europe">Europe</option>
+        <option value="Oceania">Oceania</option>
+      </select>
+
+    <h1>All Countries</h1>
+    <div id="all_countries">
+
+    </div>
+</body>
+
+</html>
+<script>
+
+  
+
+    let url = "https://restcountries.com/v3.1/all";
+
+    let Data = [];
+    async function getData() {
+        try {
+            let res = await fetch(url)
+            let data = await res.json();
+            Data = [...data];
+            console.log(data);
+            displayCard(data)
+        } catch (error) {
+            alert(error)
+        }
+    }
+    getData()
+
+  function filtering(){
+    let selected= document.querySelector("#filter_region").value;
+    if(selected=="all"){
+        displayCard(Data);
+    }else{
+        let filtered_Data=  Data.filter((elem)=> elem.region==selected );
+        displayCard(filtered_Data);;
+    }
+  }
+
+    function sorting(){
+        let sorting=document.querySelector("#sort_population").value;
+       
+        if(sorting=="all"){
+            displayCard(Data);
+        }
+        if(sorting=="asc"){
+            let x=[...Data];
+             x.sort((a,b)=> a.population - b.population);
+            displayCard(x);
+        }
+        if(sorting=="desc"){
+            let y=[...Data];
+             y.sort((a,b)=> b.population - a.population);
+            displayCard(y);
+        }
+    }
+
+  
+    function displayCard(data) {
+        document.querySelector("#all_countries").innerHTML = "";
+        data.forEach(element => {
+            let div = document.createElement("div");
+            let images = document.createElement("img");
+            images.setAttribute("src", element.flags.png)
+
+            let name = document.createElement("h1");
+            name.innerHTML = element.name.common;
+
+            let Population = document.createElement("h2");
+            Population.innerHTML = "Population : " + element.population;
+
+            let Country_Region = document.createElement("h2");
+            Country_Region.innerText = "Region : " + element.region;
+
+            let Capital = document.createElement("h2");
+            Capital.innerText = "Capital : " + element.capital;
+
+            div.append(images, name, Population, Country_Region, Capital);
+            document.querySelector("#all_countries").append(div);
+        })
+    }
+
+</script>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Footer</title>
+    <link rel="stylesheet" href="./index.css">
+     
+</head>
+
+<body>
+    <!-- Navbar responsive -->
+    <header class="header">
+        <nav class="navbar">
+            <a href="#" class="nav-logo">WebDev.</a>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="./product.html" class="nav-link">Products</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">Blog</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">About</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">Contact</a>
+                </li>
+            </ul>
+            <div class="hamburger active">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </nav>
+    </header>
+        
+
+       <div class="image-container">
+        <img src="https://media.gettyimages.com/id/1249041775/photo/photo-depicting-the-person-who-focuses-on-the-target.jpg?s=1024x1024&w=gi&k=20&c=rkyc8pbR2soOXGz3oMGXxw8KE_occ47CDhKtSG7oCaw=" alt="Responsive Image">
+      </div>
+
+    <footer class="footer">
+        <div class="about">
+            <li>loopstudios</li>
+            <ul>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Careers</a></li>
+                <li><a href="#">Events</a></li>
+                <li><a href="#">Products</a></li>
+                <li><a href="#">Support</a></li>
+            </ul>
+        </div>
+        <div class="social">
+            <ul>
+                <li>facebook</li>
+                <li>linkdin</li>
+                <li>pinInterest</li>
+                <li>Instagram</li>
+            </ul>
+            <ul>
+                <li>@2021 loopstudios.All Rights Reserved.</li>
+            </ul>
+        </div>
+    </footer>
+</body>
+
+</html>
+
+<script>
+   const hamburger = document.querySelector(".hamburger");
+    const navMenu = document.querySelector(".nav-menu");
+
+    hamburger.addEventListener("click", mobileMenu);
+
+    function mobileMenu() {
+        hamburger.classList.toggle("active");
+        navMenu.classList.toggle("active");
+    }
+
+    const navLink = document.querySelectorAll(".nav-link");
+
+    navLink.forEach(n => n.addEventListener("click", closeMenu));
+
+    function closeMenu() {
+        hamburger.classList.remove("active");
+        navMenu.classList.remove("active");
+    }
+
+
+
+</script>
