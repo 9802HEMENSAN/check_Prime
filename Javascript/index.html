@@ -1,0 +1,45 @@
+<script>
+    //    console.log(name)
+    //    var  name="aloo"
+    // // Constructor function
+    // function Person(name, age) {
+    //     this.name = name;
+    //     this.age = age;
+    // }
+
+    // // Create instances using the 'new' keyword
+    // var person1 = new  Person('John', 25);
+    // var person2 = new Person('Jane', 30);
+
+    // console.log(person1.name);  // Output: John
+    // console.log(person2.age);   // Output: 30
+let obj1={
+    "Gaurav" : "Engineer",
+    "game" : "Football"
+}
+ 
+let obj2={
+    "hemensan": "Doctor",
+    "work" : "operations"
+}
+
+// myFunction.call(obj, 'Hello', 'World');
+// Object.setPrototypeOf(obj1 ,  obj2);
+// console.log(obj1.work);
+// setTimeout(()=> {console.log(2)},3000);
+// console.log(1234567890123456789012345678901394288912734987)
+const obj = {
+  prop1: 'value1',
+  prop2: 'value2'
+};
+
+// Object.freeze(obj);
+obj.prop3 = "Hello Gaurav"
+obj.prop1 = 'new value'; // Attempted modification is ignored
+delete obj.prop2;       // Attempted deletion is ignored
+
+console.log(obj.prop1); // Output: value1
+console.log(obj.prop2); // Output: value2
+console.log(obj.prop3); // Output: value2
+
+</script>
