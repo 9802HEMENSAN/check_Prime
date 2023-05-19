@@ -1,0 +1,68 @@
+  /* CSS for the navbar */
+  header {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+  }
+  
+  nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  nav ul li {
+    display: inline-block;
+    margin-right: 10px;
+  }
+  
+  nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    padding: 5px 10px;
+  }
+  
+  nav ul li a:hover {
+    background-color: #555;
+  }
+
+  #breeds-container{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+  }
+     /* CSS for the breed cards */
+     .breed-card {
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     margin-bottom: 20px;
+     padding: 10px;
+     border: 1px solid #ddd;
+     border-radius: 5px;
+     max-width: 300px;
+   }
+   
+   .breed-card img {
+     width: 100%;
+     max-height: 200px;
+     object-fit: cover;
+     border-radius: 5px;
+     margin-bottom: 10px;
+   }
+   
+   .breed-card h3 {
+     margin-bottom: 10px;
+   }
+   
+   .breed-card p {
+     text-align: center;
+   }
+   
+   /* CSS for the cat images */
+   .cat-image {
+     width: 100%;
+     max-height: 200px;
+     object-fit: cover;
+     border-radius: 5px;
+     margin-bottom: 10px;
+   }

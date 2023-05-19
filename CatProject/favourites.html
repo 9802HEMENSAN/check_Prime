@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Cat App - Favourites</title>
+  <link rel="stylesheet" href="./css/favourite.css">
+ 
+</head>
+
+<body>
+  <header>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="cat.html">Cat</a></li>
+        <li><a href="favourites.html">Favourites</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <h1>Your Favorite Cats</h1>
+
+  <div id="favorites-container">
+    <!-- Favorite images will be dynamically added here -->
+  </div>
+
+  <script>
+    // JavaScript code to fetch favorite images and create image elements dynamically
+    const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+
+  
+
+    
+
+    fetch(`https://api.thecatapi.com/v1/images/search?limit=10&breed_ids=beng&api_key=live_Rb67V8o4vvkOrH4OgOPGGU19yFAGyM28tkiSxSuMcxNubVY9gR19jUGreKhNl9iX`)
+      .then(response => response.json())
+      .then(data =>{
+        const array1 = [1, 2, 3, 4, 5];
+        const array2 = [2, 4, 6];
+    const commonElements = data.filter(element => favorites.includes(element.id));
+        console.log(commonElements)
+        displayFavorites(commonElements)
+      });
+
+    function displayFavorites(favorites) {
+      const favoritesContainer = document.getElementById('favorites-container');
+
+      favorites.forEach(favorite => {
+        const imageElement = document.createElement('img');
+        imageElement.src = favorite.url;
+        imageElement.alt = 'Cat Image';
+        imageElement.classList.add('cat-image');
+
+        const removeButton = document.createElement('button');
+        removeButton.textContent = 'Remove';
+        removeButton.addEventListener('click', () => removeFavorite(favorite.id));
+        imageElement.appendChild(removeButton);
+
+        favoritesContainer.appendChild(imageElement);
+      });
+    }
+
+    function removeFavorite(imageId) {
+      let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+      favorites = favorites.filter(id => id !== imageId);
+      localStorage.setItem('favorites', JSON.stringify(favorites));
+      location.reload(); // Refresh the page to update the favorites list
+    }
+  </script>
+</body>
+
+</html>

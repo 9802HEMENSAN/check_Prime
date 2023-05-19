@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cat App - Home</title>
+   <link rel="stylesheet" href="./css/index.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="cat.html">Cat</a></li>
+        <li><a href="favourites.html">Favourites</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <h1>Cat Breeds</h1>
+
+  <div id="breeds-container">
+    <!-- Breed cards will be dynamically added here -->
+  </div>
+
+  <div id="pagination-container">
+    <!-- Pagination buttons will be dynamically added here -->
+  </div>
+
+  <script>
+      const pageSize = 5; // Number of breeds per page
+    let currentPage = 1; // Initially display the first page
+    // JavaScript code to fetch breeds data and create cards dynamically
+    fetch('https://api.thecatapi.com/v1/images/search?limit=10&breed_ids=beng&api_key=live_Rb67V8o4vvkOrH4OgOPGGU19yFAGyM28tkiSxSuMcxNubVY9gR19jUGreKhNl9iX')
+      .then(response => response.json())
+      .then(data =>{ 
+        console.log(data)
+        const totalItems = data.length;
+        const totalPages = Math.ceil(totalItems / pageSize);
+        displayBreeds(data,totalPages)});
+
+    function displayBreeds(breeds,totalPages) {
+      const breedsContainer = document.getElementById('breeds-container');
+
+      breedsContainer.innerHTML = '';
+      const startIndex = (currentPage - 1) * pageSize;
+      const endIndex = startIndex + pageSize;
+      const breedsToShow = breeds.slice(startIndex, endIndex);
+         
+      breedsToShow.forEach(breed => {
+        const card = document.createElement('div');
+        card.classList.add('breed-card');
+
+        const image = document.createElement('img');
+        image.src = breed.url;
+        image.alt = breed.breeds[0].name;
+        card.appendChild(image);
+
+        const name = document.createElement('h3');
+        name.textContent =  breed.breeds[0].name;
+        card.appendChild(name);
+
+        const description = document.createElement('p');
+        description.textContent =  breed.breeds[0].description;
+        card.appendChild(description);
+
+        // Add other breed details as needed
+
+        const viewImagesBtn = document.createElement('button');
+        viewImagesBtn.textContent = 'View Images';
+        viewImagesBtn.addEventListener('click', () => viewImages(breed.id));
+        card.appendChild(viewImagesBtn);
+
+        breedsContainer.appendChild(card);
+      });
+
+      breedsToShow.forEach(breed => {
+        const card = document.createElement('div');
+        card.classList.add('breed-card');
+
+        // Add breed details to the card
+
+        breedsContainer.appendChild(card);
+      });
+
+      displayPagination(totalPages,breeds);
+    }
+
+    function displayPagination(totalPages,breeds) {
+      const paginationContainer = document.getElementById('pagination-container');
+      paginationContainer.innerHTML = '';
+
+      for (let page = 1; page <= totalPages; page++) {
+        const pageButton = document.createElement('button');
+        pageButton.textContent = page;
+        pageButton.addEventListener('click', () => {
+          currentPage = page;
+          displayBreeds(breeds, totalPages);
+        });
+
+        paginationContainer.appendChild(pageButton);
+      }
+    }
+
+    function viewImages(breedId) {
+      localStorage.setItem('selectedBreedId', breedId);
+      window.location.href = 'cat.html';
+    }
+  </script>
+</body>
+</html>
+

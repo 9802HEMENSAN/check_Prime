@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Cat App - Cat</title>
+    <style>
+        img {
+            width: 400px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="cat.html">Cat</a></li>
+                <li><a href="favourites.html">Favourites</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <h1>Cat Images</h1>
+
+    <div id="images-container">
+        <!-- Images will be dynamically added here -->
+    </div>
+
+    <script>
+        // JavaScript code to fetch breed images and create image elements dynamically
+        const breedId = localStorage.getItem('selectedBreedId');
+
+        fetch(`https://api.thecatapi.com/v1/images/${breedId}`)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data)
+                displayImages(data)
+            });
+
+        function displayImages(images) {
+            const imagesContainer =
+                document.getElementById('images-container');
+
+
+            const imageElement = document.createElement('img');
+            imageElement.src = images.url;
+            imageElement.alt = 'Cat Image';
+            imageElement.classList.add('cat-image');
+
+            const favoriteButton = document.createElement('button');
+            favoriteButton.textContent = 'Mark as Favorite';
+            favoriteButton.addEventListener('click', () => markAsFavorite(images.id));
+            // imageElement.appendChild(favoriteButton);
+
+            imagesContainer.append(imageElement, favoriteButton)
+
+        }
+
+        function markAsFavorite(imageId) {
+            const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+            if (favorites.includes(imageId)) {
+                alert("already a favourite image")
+
+            } else {
+                favorites.push(imageId);
+                localStorage.setItem('favorites', JSON.stringify(favorites));
+            }
+        }
+    </script>
+</body>
+
+</html>
