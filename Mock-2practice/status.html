@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Status Page</title>
+   <link rel="stylesheet" href="./css/status.css">
+</head>
+<body>
+  <div class="navbar">
+    <a href="index.html">Leave Request Page</a>
+    <a href="dashboard.html">Dashboard Page</a>
+    <a class="active" href="status.html">Status Page</a>
+  </div>
+
+  <div class="container">
+    <h2>Status Page</h2>
+
+    <div class="filter">
+      <label for="statusFilter">Filter by Status:</label>
+      <select id="statusFilter">
+        <option value="">All</option>
+        <option value="Granted">Granted</option>
+        <option value="Rejected">Rejected</option>
+        <option value="Pending">Pending</option>
+      </select>
+    </div>
+
+    <table id="leaveRequestsTable">
+      <thead>
+        <tr>
+          <th>Unique ID</th>
+          <th>Name</th>
+          <th>Days of Leave</th>
+          <th>Overseer</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody">
+        <!-- Leave requests data will be dynamically added here -->
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    // Sample leave requests data
+    var leaveRequests = [
+      {
+        uniqueId: '001',
+        name: 'John Doe',
+        startDate: '2023-05-01',
+        endDate: '2023-05-05',
+        overseer: 'HR',
+        status: 'Granted'
+      },
+      {
+        uniqueId: '002',
+        name: 'Jane Doe',
+        startDate: '2023-05-10',
+        endDate: '2023-05-15',
+        overseer: 'Manager',
+        status: 'Rejected'
+      },
+      {
+        uniqueId: '003',
+        name: 'Alice Smith',
+        startDate: '2023-06-01',
+        endDate: '2023-06-07',
+        overseer: 'EC',
+        status: 'Pending'
+      }
+    ];
+
+    // Function to display leave requests in the table
+    function displayLeaveRequests() {
+      var statusFilter = document.getElementById('statusFilter').value;
+      var tableBody = document.getElementById('tableBody');
+      tableBody.innerHTML = '';
+
+      leaveRequests.forEach(function(request) {
+        if (statusFilter === '' || request.status === statusFilter) {
+          var daysOfLeave = calculateDaysOfLeave(request.startDate, request.endDate);
+
+          var row = document.createElement('tr');
+          row.innerHTML = '<td>' + request.uniqueId + '</td>' +
+                          '<td>' + request.name + '</td>' +
+                          '<td>' + daysOfLeave + '</td>' +
+                          '<td>' + request.overseer + '</td>' +
+                          '<td>' + request.status + '</td>';
+
+          tableBody.appendChild(row);
+        }
+      });
+    }
+
+    // Function to calculate the number of days of leave
+    function calculateDaysOfLeave(startDate, endDate) {
+      var start = new Date(startDate);
+      var end = new Date(endDate);
+      var days = Math.round((end - start) / (1000 * 60 * 60 * 24)) + 1;
+      return days;
+    }
+
+    // Event listener for status filter change
+    document.getElementById('statusFilter').addEventListener('change', displayLeaveRequests);
+
+    // Display leave requests on page load
+    displayLeaveRequests();
+  </script>
+</body>
+</html>

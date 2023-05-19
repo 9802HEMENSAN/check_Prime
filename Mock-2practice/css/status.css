@@ -1,0 +1,76 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+
+  .navbar {
+    background-color: #f1f1f1;
+    overflow: hidden;
+  }
+
+  .navbar a {
+    float: left;
+    display: block;
+    color: #333;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+  }
+
+  .navbar a:hover {
+    background-color: #ddd;
+  }
+
+  .navbar a.active {
+    background-color: #4CAF50;
+    color: white;
+  }
+
+  .container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+  }
+
+  .container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .filter {
+    margin-bottom: 12px;
+  }
+
+  .filter label {
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  .filter select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+
+  #leaveRequestsTable {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  #leaveRequestsTable th, #leaveRequestsTable td {
+    padding: 8px;
+    border-bottom: 1px solid #ccc;
+  }
+
+  #leaveRequestsTable th {
+    background-color: #f1f1f1;
+    font-weight: bold;
+    text-align: left;
+  }

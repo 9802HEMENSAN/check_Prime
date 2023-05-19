@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dashboard Page</title>
+  <link rel="stylesheet" href="./css//dashboard.css">
+</head>
+<body>
+  <div class="navbar">
+    <a href="index.html">Leave Request Page</a>
+    <a class="active" href="dashboard.html">Dashboard Page</a>
+    <a href="status.html">Status Page</a>
+  </div>
+
+  <div class="container">
+    <h2>Leave Requests Dashboard</h2>
+
+    <div class="filter">
+      <label for="designationFilter">Filter by Designation:</label>
+      <select id="designationFilter">
+        <option value="">All</option>
+        <option value="employee">Employee</option>
+        <option value="student">Student</option>
+      </select>
+    </div>
+
+    <div class="search">
+      <label for="nameSearch">Search by Name:</label>
+      <input type="text" id="nameSearch">
+    </div>
+
+    <table id="leaveRequestsTable">
+      <thead>
+        <tr>
+          <th>Unique ID</th>
+          <th>Name</th>
+          <th>Reason for Leave</th>
+          <th>Designation</th>
+          <th>Leave Start Date</th>
+          <th>Leave End Date</th>
+          <th>Overseer</th>
+          <th>OTP</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Table rows will be dynamically generated using JavaScript -->
+      </tbody>
+    </table>
+  </div>
+
+  <div id="otpModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Grant Leave</h2>
+      <p id="modalLeaveDetails"></p>
+      <label for="otpInput">Enter OTP:</label>
+      <input type="text" id="otpInput">
+      <button id="verifyOTP">Verify OTP</button>
+    </div>
+  </div>
+
+  <script>
+    // Array to store leave requests
+    var leaveRequests = [];
+
+    // Load leave requests from LocalStorage
+    var leaveRequestsData = localStorage.getItem('leaveRequests');
+    if (leaveRequestsData) {
+      leaveRequests = JSON.parse(leaveRequestsData);
+    }
+
+    // Generate OTP for each leave request
+    leaveRequests.forEach(function(leaveRequest) {
+      leaveRequest.otp = generateOTP();
+    });
+
+    // Display leave requests in the table
+    displayLeaveRequests();
+
+    // Add event listener for designation filter
+    document.getElementById('designationFilter').addEventListener('change', function() {
+      displayLeaveRequests();
+    });
+
+    // Add event listener for name search
+    document.getElementById('nameSearch').addEventListener('input', function() {
+      displayLeaveRequests();
+    });
+
+    // Function to display leave requests in the table
+    function displayLeaveRequests() {
+      var designationFilter = document.getElementById('designationFilter').value;
+      var nameSearch = document.getElementById('nameSearch').value.toLowerCase();
+
+      var tableBody = document.getElementById('leaveRequestsTable').getElementsByTagName('tbody')[0];
+      tableBody.innerHTML = '';
+
+      leaveRequests.forEach(function(leaveRequest) {
+        if (
+          (designationFilter === '' || leaveRequest.designation === designationFilter) &&
+          (nameSearch === '' || leaveRequest.name.toLowerCase().includes(nameSearch))
+        ) {
+            var row = document.createElement('tr');
+
+var uniqueIdCell = document.createElement('td');
+uniqueIdCell.textContent = leaveRequest.uniqueId;
+row.appendChild(uniqueIdCell);
+
+var nameCell = document.createElement('td');
+nameCell.textContent = leaveRequest.name;
+row.appendChild(nameCell);
+
+var reasonCell = document.createElement('td');
+reasonCell.textContent = leaveRequest.reason;
+row.appendChild(reasonCell);
+
+var designationCell = document.createElement('td');
+designationCell.textContent = leaveRequest.designation;
+row.appendChild(designationCell);
+
+var startDateCell = document.createElement('td');
+startDateCell.textContent = leaveRequest.startDate;
+row.appendChild(startDateCell);
+
+var endDateCell = document.createElement('td');
+endDateCell.textContent = leaveRequest.endDate;
+row.appendChild(endDateCell);
+
+var overseerCell = document.createElement('td');
+overseerCell.textContent = leaveRequest.overseer;
+row.appendChild(overseerCell);
+
+var otpCell = document.createElement('td');
+otpCell.textContent = leaveRequest.otp;
+row.appendChild(otpCell);
+
+var actionsCell = document.createElement('td');
+var rejectButton = document.createElement('button');
+rejectButton.textContent = 'Reject Leave';
+rejectButton.className = 'reject-button';
+rejectButton.addEventListener('click', function() {
+  removeLeaveRequest(row);
+});
+actionsCell.appendChild(rejectButton);
+
+var grantButton = document.createElement('button');
+grantButton.textContent = 'Grant Leave';
+grantButton.className = 'grant-button';
+grantButton.addEventListener('click', function() {
+  openOTPModal(leaveRequest, row);
+});
+actionsCell.appendChild(grantButton);
+
+row.appendChild(actionsCell);
+
+tableBody.appendChild(row);
+}
+});
+}
+
+// Function to remove a leave request from the dashboard
+function removeLeaveRequest(row) {
+if (confirm('Are you sure you want to reject this leave request?')) {
+var tableBody = document.getElementById('leaveRequestsTable').getElementsByTagName('tbody')[0];
+tableBody.removeChild(row);
+}
+}
+
+// Function to open OTP modal and verify OTP
+function openOTPModal(leaveRequest, row) {
+var modal = document.getElementById('otpModal');
+var modalLeaveDetails = document.getElementById('modalLeaveDetails');
+var otpInput = document.getElementById('otpInput');
+var verifyOTPButton = document.getElementById('verifyOTP');
+
+modalLeaveDetails.textContent = 'Leave Request Details:\n' +
+'Name: ' + leaveRequest.name + '\n' +
+'Reason for Leave: ' + leaveRequest.reason + '\n' +
+'Designation: ' + leaveRequest.designation + '\n' +
+'Leave Start Date: ' + leaveRequest.startDate + '\n' +
+'Leave End Date: ' + leaveRequest.endDate + '\n' +
+'Overseer: ' + leaveRequest.overseer;
+
+modal.style.display = 'block';
+
+verifyOTPButton.onclick = function() {
+var enteredOTP = otpInput.value;
+if (enteredOTP === leaveRequest.otp) {
+modal.style.display = 'none';
+removeLeaveRequest(row);
+} else {
+alert('Incorrect OTP. Please try again.');
+}
+}
+
+var closeButton = document.getElementsByClassName('close')[0];
+closeButton.onclick = function() {
+modal.style.display = 'none';
+}
+
+window.onclick = function(event) {
+if (event.target === modal) {
+modal.style.display = 'none';
+}
+}
+}
+
+// Function to generate 4-digit OTP
+      // Function to generate 4-digit OTP
+      function generateOTP() {
+        var otp = Math.floor(1000 + Math.random() * 9000);
+        return otp.toString();
+      }
+
+    </script>
+  </body>
+</html>
+ 

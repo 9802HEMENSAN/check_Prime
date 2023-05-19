@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Leave Request Page</title>
+  <link rel="stylesheet" href="./css/index.css">
+ 
+</head>
+<body>
+  <div class="navbar">
+    <a href="index.html">Leave Request Page</a>
+    <a href="dashboard.html">Dashboard Page</a>
+    <a href="status.html">Status Page</a>
+  </div>
+
+  <div class="container">
+    <h2>Leave Request Form</h2>
+    <form id="leaveRequestForm">
+      <label for="uniqueId">Unique ID:</label>
+      <input type="text" id="uniqueId" name="uniqueId" required>
+
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" minlength="4" required>
+
+      <label for="reason">Reason for Leave:</label>
+      <textarea id="reason" name="reason" required></textarea>
+
+      <label for="designation">Designation:</label>
+      <label><input type="radio" name="designation" value="employee" required> Employee</label>
+      <label><input type="radio" name="designation" value="student" required> Student</label>
+
+      <label for="startDate">Leave Start Date:</label>
+      <input type="date" id="startDate" name="startDate" min="2023-05-19" required>
+
+      <label for="endDate">Leave End Date:</label>
+      <input type="date" id="endDate" name="endDate" min="2023-05-19" required>
+
+      <label for="overseer">Overseer:</label>
+      <select id="overseer" name="overseer" required>
+        <option value="">Select an option</option>
+        <option value="EC">EC</option>
+        <option value="HR">HR</option>
+        <option value="Manager">Manager</option>
+      </select>
+
+      <button type="submit">Apply</button>
+    </form>
+  </div>
+
+  <script>
+    // Validate form and store data in LocalStorage
+    document.getElementById('leaveRequestForm').addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevent form submission
+
+      // Get form values
+      var uniqueId = document.getElementById('uniqueId').value;
+      var name = document.getElementById('name').value;
+      var reason = document.getElementById('reason').value;
+      var designation = document.querySelector('input[name="designation"]:checked').value;
+      var startDate = document.getElementById('startDate').value;
+      var endDate = document.getElementById('endDate').value;
+      var overseer = document.getElementById('overseer').value;
+
+      // Perform validation
+      if (uniqueIdExists(uniqueId)) {
+        alert('Unique ID already exists. Please choose a different ID.');
+        return;
+      }
+
+      if (name.length < 4) {
+        alert('Name should be at least 4 characters.');
+        return;
+      }
+
+      // Additional validation if needed
+
+      // Create an object with the form data
+      var leaveRequest = {
+        uniqueId: uniqueId,
+        name: name,
+        reason: reason,
+        designation: designation,
+        startDate: startDate,
+        endDate: endDate,
+        overseer: overseer
+      };
+
+      // Store the data in LocalStorage
+      var leaveRequests = localStorage.getItem('leaveRequests');
+      if (leaveRequests) {
+        // Append to existing leave requests
+        var leaveRequestsArray = JSON.parse(leaveRequests);
+        leaveRequestsArray.push(leaveRequest);
+        localStorage.setItem('leaveRequests', JSON.stringify(leaveRequestsArray));
+      } else {
+        // Create a new array with the leave request
+        var leaveRequestsArray = [leaveRequest];
+        localStorage.setItem('leaveRequests', JSON.stringify(leaveRequestsArray));
+      }
+
+      // Reset the form
+      document.getElementById('leaveRequestForm').reset();
+
+      // Show success message
+      alert('Leave request submitted successfully!');
+    });
+
+    // Function to check if unique ID already exists in LocalStorage
+    function uniqueIdExists(uniqueId) {
+      var leaveRequests = localStorage.getItem('leaveRequests');
+      if (leaveRequests) {
+        var leaveRequestsArray = JSON.parse(leaveRequests);
+        return leaveRequestsArray.some(function(leaveRequest) {
+          return leaveRequest.uniqueId === uniqueId;
+        });
+      }
+      return false;
+    }
+  </script>
+</body>
+</html>
