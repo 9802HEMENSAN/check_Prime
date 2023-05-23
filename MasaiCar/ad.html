@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Post an Ad</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <header>
+        <nav>
+          <ul>
+            <li><a href="ad.html">Ad</a></li>
+            <li><a href="cars.html">Cars</a></li>
+            <li><a href="wishlist.html">Wishlist</a></li>
+          </ul>
+        </nav>
+      </header>
+        
+  <h1>Post an Ad</h1>
+  <form id="adForm">
+    <label for="brand">Brand of car:</label>
+    <select id="brand" name="brand">
+      <option value="Tata">Tata</option>
+      <option value="Toyota">Toyota</option>
+      <!-- Add more options as needed -->
+    </select>
+
+    <label for="type">Manual or Automated:</label>
+    <select id="type" name="type">
+      <option value="Manual">Manual</option>
+      <option value="Automated">Automated</option>
+      <!-- Add more options as needed -->
+    </select>
+
+    <label for="year">Year of purchase:</label>
+    <select id="year" name="year">
+      <option value="2019">2019</option>
+      <option value="2017">2017</option>
+      <!-- Add more options as needed -->
+    </select>
+
+    <label for="kms">KM driven:</label>
+    <input type="number" id="kms" name="kms" required>
+
+    <label for="description">Description:</label>
+    <textarea id="description" name="description" required></textarea>
+
+    <label for="price">Price:</label>
+    <input type="number" id="price" name="price" required>
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <script src="./script/ad.js"></script>
+</body>
+</html>

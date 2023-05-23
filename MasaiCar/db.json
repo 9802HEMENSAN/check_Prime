@@ -1,0 +1,31 @@
+{
+  "cars": [
+    {
+      "brand": "Tata",
+      "type": "Manual",
+      "year": 2019,
+      "kms": 10000,
+      "description": "Tata Altroz with all original documents",
+      "price": 10000000,
+      "id": 1
+    },
+    {
+      "id": 2,
+      "brand": "Tata",
+      "type": "AMT",
+      "year": 2017,
+      "kms": 8000,
+      "description": "Tata Nexon with all original documents",
+      "price": 800000
+    },
+    {
+      "brand": "Tata",
+      "type": "Manual",
+      "year": 2019,
+      "kms": 123,
+      "description": "tata jaguar",
+      "price": 123000,
+      "id": 3
+    }
+  ]
+}

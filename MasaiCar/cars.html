@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Car Advertisement App</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <style>
+    #adsContainer{
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+       gap : 10px
+    }
+    #adsContainer>div{
+        background: #8f8787;
+    }
+    .modal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 10% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 50%;
+  max-width: 500px;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modal-content h2 {
+  margin-top: 0;
+}
+
+.modal-content form label {
+  display: block;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.modal-content form select,
+.modal-content form input[type="number"],
+.modal-content form textarea {
+  width: 100%;
+  padding: 5px;
+  margin-top: 5px;
+}
+
+.modal-content form button[type="submit"] {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.modal-content form button[type="submit"]:hover {
+  background-color: #45a049;
+}
+
+
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <ul>
+        <li><a href="ad.html">Ad</a></li>
+        <li><a href="cars.html">Cars</a></li>
+        <li><a href="wishlist.html">Wishlist</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <div id="content">
+      <h1>Ads</h1>
+      <div id="filters">
+        <label for="sortSelect">Sort by:</label>
+        <select id="sortSelect">
+          <option value="price">Price</option>
+          <option value="kms">KMS Driven</option>
+        </select>
+
+        <label for="filterSelect">Filter by Brand:</label>
+        <select id="filterSelect">
+          <option value="">All</option>
+          <option value="Tata">Tata</option>
+          <option value="Toyota">Toyota</option>
+        </select>
+      </div>
+
+      <div id="adsContainer">
+
+      </div>
+    </div>
+  </main>
+
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span id="closeModal" class="close">&times;</span>
+      <h2>Edit Ad</h2>
+      <form id="editForm">
+        <label for="brand">Brand of car:</label>
+        <select id="brand" name="brand">
+          <option value="Tata">Tata</option>
+          <option value="Toyota">Toyota</option>
+          <!-- Add more options as needed -->
+        </select>
+
+        <label for="type">Manual or Automated:</label>
+        <select id="type" name="type">
+          <option value="Manual">Manual</option>
+          <option value="Automated">Automated</option>
+          <!-- Add more options as needed -->
+        </select>
+
+        <label for="year">Year of purchase:</label>
+        <select id="year" name="year">
+          <option value="2019">2019</option>
+          <option value="2017">2017</option>
+          <!-- Add more options as needed -->
+        </select>
+
+        <label for="kms">KM driven:</label>
+        <input type="number" id="kms" name="kms" required>
+
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" required></textarea>
+
+        <label for="price">Price:</label>
+        <input type="number" id="price" name="price" required>
+
+        <button type="submit">Save</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="./script/cars.js"></script>
+</body>
+</html>
