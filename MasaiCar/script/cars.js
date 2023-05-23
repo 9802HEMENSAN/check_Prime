@@ -63,7 +63,7 @@ function fetchAds() {
 
       const wishlistIcon = document.createElement('button');
       wishlistIcon.innerText="WishList"
-      wishlistIcon.addEventListener('click', () => addToWishlist(ad.id));
+      wishlistIcon.addEventListener('click', () => addToWishlist(ad));
       iconsContainer.appendChild(wishlistIcon);
 
       card.appendChild(iconsContainer);
@@ -72,6 +72,24 @@ function fetchAds() {
     });
   }
 
+  // Function to Add into Wishlist
+
+  function addToWishlist(wish){
+    fetch(`http://localhost:8080/wishlist`,{
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(wish)
+    })
+    .then((res)=>{
+        alert("Added to wishlist")
+        fetchAds();
+    })
+    .catch((error)=>{
+        alert("Errror while Adding to wishlist")
+    })
+  }
   // Function to delete an ad
 function deleteAd(id) {
     fetch(`http://localhost:8080/cars/${id}`, {
@@ -188,7 +206,7 @@ editForm.addEventListener('submit', function(event) {
 
   // Send a PUT request to update the ad in JSON Server
   fetch(`http://localhost:8080/cars/${currentAd}`, {
-    method: 'PUT',
+    method: 'PATCH',
     headers: {
       'Content-Type': 'application/json'
     },

@@ -12,12 +12,23 @@
     {
       "id": 2,
       "brand": "Tata",
-      "type": "AMT",
+      "type": "Manual",
       "year": 2017,
       "kms": 8000,
       "description": "Tata Nexon with all original documents",
-      "price": 800000
+      "price": 200000000
     },
+    {
+      "brand": "Tata",
+      "type": "Manual",
+      "year": 2019,
+      "kms": 123,
+      "description": "tata jaguar",
+      "price": 123000,
+      "id": 3
+    }
+  ],
+  "wishlist": [
     {
       "brand": "Tata",
       "type": "Manual",
