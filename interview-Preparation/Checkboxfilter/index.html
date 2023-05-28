@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Product Page</title>
+  <style>
+    /* CSS for product cards */
+    .product-card {
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+
+    .product-card h3 {
+      margin-top: 0;
+    }
+
+    /* CSS for checkboxes and sorting */
+    .filter-container {
+      margin-bottom: 10px;
+    }
+
+    .checkbox {
+      margin-right: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="filter-container">
+    <h4>Filter:</h4>
+    <label for="checkbox1" class="checkbox">
+      <input type="checkbox" id="checkbox1" onchange="filterProducts()"> Category 1
+    </label>
+    <label for="checkbox2" class="checkbox">
+      <input type="checkbox" id="checkbox2" onchange="filterProducts()"> Category 2
+    </label>
+    <label for="checkbox3" class="checkbox">
+      <input type="checkbox" id="checkbox3" onchange="filterProducts()"> Category 3
+    </label>
+  </div>
+
+  <!-- <div class="filter-container">
+    <h4>Sort by:</h4>
+    <select id="sort-select" onchange="sortProducts()">
+      <option value="name">Name</option>
+      <option value="price">Price</option>
+    </select>
+  </div> -->
+
+  <div id="product-list">
+    <!-- Product cards will be dynamically generated here -->
+  </div>
+
+  <script>
+    // Dummy product data
+    var products = [
+      { name: 'Product 1', category: 'Category 1', price: 10 },
+      { name: 'Product 2', category: 'Category 2', price: 20 },
+      { name: 'Product 3', category: 'Category 3', price: 15 },
+      { name: 'Product 4', category: 'Category 1', price: 25 },
+      { name: 'Product 5', category: 'Category 2', price: 30 },
+      { name: 'Product 6', category: 'Category 3', price: 12 },
+      { name: 'Product 7', category: 'Category 1', price: 18 },
+      { name: 'Product 8', category: 'Category 2', price: 22 },
+      { name: 'Product 9', category: 'Category 3', price: 28 },
+      { name: 'Product 10', category: 'Category 1', price: 35 },
+      { name: 'Product 11', category: 'Category 2', price: 16 },
+      { name: 'Product 12', category: 'Category 3', price: 14 },
+      { name: 'Product 13', category: 'Category 1', price: 19 },
+      { name: 'Product 14', category: 'Category 2', price: 32 },
+      { name: 'Product 15', category: 'Category 3', price: 27 }
+    ];
+
+    // Function to filter products based on selected checkboxes
+    function filterProducts() {
+      var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+
+      var selectedCategories = [];
+
+      checkboxes.forEach( (checkbox)=> {
+        if (checkbox.checked) {
+          selectedCategories.push(checkbox.nextSibling.textContent.trim());
+          console.log(checkbox.nextSibling.textContent, checkbox.checked)
+        }
+      });
+      console.log(selectedCategories)
+      // Clear the product list
+      document.getElementById('product-list').innerHTML = '';
+      console.log(selectedCategories.length)
+      // Filter and display products based on selected categories
+      if (selectedCategories.length != 0) {
+        var filteredProducts = products.filter(function (product) {
+          return selectedCategories.includes(product.category);
+        });
+
+        filteredProducts.forEach(function (product) {
+          createProductCard(product);
+        });
+      } else {
+        products.forEach(function (product) {
+          createProductCard(product);
+        });
+      }
+
+    }
+
+    // Function to sort products based on selected sorting option
+    // function sortProducts() {
+    //   var sortSelect = document.getElementById('sort-select');
+    //   var sortBy = sortSelect.value;
+
+    //   // Clear the product list
+    //   document.getElementById('product-list').innerHTML = '';
+
+    //   // Sort and display products based on selected sorting option
+    //   var sortedProducts = products.slice().sort(function(a, b) {
+    //     if (sortBy === 'name') {
+    //       return a.name.localeCompare(b.name);
+    //     } else if (sortBy === 'price') {
+    //       return a.price - b.price;
+    //     }
+    //   });
+
+    //   sortedProducts.forEach(function(product) {
+    //     createProductCard(product);
+    //   });
+    // }
+
+    // Function to create a product card
+    function createProductCard(product) {
+      var productCard = document.createElement('div');
+      productCard.className = 'product-card';
+
+      var productName = document.createElement('h3');
+      productName.textContent = product.name;
+
+      var productCategory = document.createElement('p');
+      productCategory.textContent = 'Category: ' + product.category;
+
+      var productPrice = document.createElement('p');
+      productPrice.textContent = 'Price: $' + product.price;
+
+      productCard.appendChild(productName);
+      productCard.appendChild(productCategory);
+      productCard.appendChild(productPrice);
+
+      document.getElementById('product-list').appendChild(productCard);
+    }
+
+    // Initial rendering of products
+    products.forEach(function (product) {
+      createProductCard(product);
+    });
+  </script>
+</body>
+
+</html>
