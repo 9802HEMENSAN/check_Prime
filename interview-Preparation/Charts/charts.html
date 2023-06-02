@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Charts</title>
+    <style>
+        #chart {
+            height: 1000px;
+            width: 1000px
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Form To Fill</h1>
+    <!-- Add Data -->
+    <form action="chartdata">
+        <Select id="month">
+            <option value="Jan">Jan</option>
+            <option value="Feb">Feb</option>
+            <option value="March">March</option>
+            <option value="April">April</option>
+            <option value="May">May</option>
+            <option value="June">June</option>
+            <option value="July">July</option>
+            <option value="Aug">Aug</option>
+            <option value="Sept">Sept</option>
+            <option value="Oct">Oct</option>
+            <option value="Nov">Nov</option>
+            <option value="Dec">Dec</option>
+        </Select>
+        <input type="number" id="attend" placeholder="attendence">
+        <input type="number" id="perform" placeholder="performance">
+        <input type="submit" value="Submit Details">
+    </form>
+    <!-- Remove Data -->
+    <button id="remove-last">Remove from last</button>
+    <button id="edit">Edit</button>
+
+    <div id="chart">
+        <canvas id="myChart">
+
+        </canvas>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</body>
+
+</html>
+<script>
+    let form = document.querySelector("form")
+    let month = document.getElementById("month")
+    let attendance = document.getElementById("attend")
+    let perfomance = document.getElementById("perform")
+    let RemoveButton = document.getElementById("remove-last")
+    let EditButton = document.getElementById("edit")
+
+    var chart, ctx
+    let data = {
+        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "July", "Aug", "Sept", "Oct", "Nov", "Dec"],
+        datasets: [
+            {
+                label: "Attendance",
+                data: [80, 70, 80, 60, 60, 90, 80, 60, 40, 60, 70, 89],
+                borderWidth: 1,
+            },
+            {
+                label: "Performance",
+                data: [60, 50, 40, 50, 30, 70, 60, 50, 30, 50, 50, 70],
+                borderWidth: 1,
+            },
+        ],
+    };
+    form.addEventListener("submit", SubmitData);
+    RemoveButton.addEventListener("click", RemoveItem)
+    EditButton.addEventListener("click", editData);
+    function editData() {
+        const selectedIndex = month.selectedIndex;
+        // console.log(selectedIndex);
+      
+        if (selectedIndex >= 0) {
+            const selectMonth = month[selectedIndex].value;
+            const updatedAttendence = attendance.value;
+            const updatedPerformance = perfomance.value
+            data.datasets[0].data[selectedIndex] = updatedAttendence
+            data.datasets[1].data[selectedIndex] = updatedPerformance;
+            chart.update();
+            form.reset();
+        }
+    }
+    function RemoveItem() {
+        chart.data.labels.pop()
+        chart.data.datasets[0].data.pop()
+        chart.data.datasets[1].data.pop()
+        chart.update()
+    }
+
+    function SubmitData(e) {
+        e.preventDefault();
+
+        let payload = {
+            month: month.value,
+            attendance: attendance.value,
+            perfomance: perfomance.value
+        };
+        AddData(chart, payload)
+    }
+
+    function AddData(chart, { month, attendance, perfomance }) {
+        chart.data.labels.push(month)
+        chart.data.datasets[0].data.push(attendance)
+        chart.data.datasets[1].data.push(perfomance)
+        chart.update()
+        console.log(chart)
+        //  console.log(month, attendance,perfomance)
+    }
+
+
+    ctx = document.getElementById("myChart")
+
+    chart = new Chart(ctx, {
+        type: "bar",
+        data: data,
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    })
+</script>
