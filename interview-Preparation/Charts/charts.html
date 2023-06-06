@@ -79,15 +79,19 @@
     function editData() {
         const selectedIndex = month.selectedIndex;
         // console.log(selectedIndex);
-      
-        if (selectedIndex >= 0) {
-            const selectMonth = month[selectedIndex].value;
-            const updatedAttendence = attendance.value;
-            const updatedPerformance = perfomance.value
-            data.datasets[0].data[selectedIndex] = updatedAttendence
-            data.datasets[1].data[selectedIndex] = updatedPerformance;
-            chart.update();
-            form.reset();
+        if(data.labels.includes(month[selectedIndex].value)){
+            if (selectedIndex >= 0) {
+                const selectMonth = month[selectedIndex].value;
+                const updatedAttendence = attendance.value;
+                const updatedPerformance = perfomance.value
+                data.datasets[0].data[selectedIndex] = updatedAttendence
+                data.datasets[1].data[selectedIndex] = updatedPerformance;
+                chart.update();
+                form.reset();
+                alert("Updated Successfully");
+            }
+        }else{
+            alert("Month Data is not present !!")
         }
     }
     function RemoveItem() {
